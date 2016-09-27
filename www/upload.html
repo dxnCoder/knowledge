@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    <style>
+        h1{text-align: center}
+        table tr{height: 50px;}
+    </style>
+</head>
+<body>
+<h1>文件上传</h1>
+<table style="margin: 0 auto">
+    <tr>
+        <td>视频类型：</td>
+        <td>
+            <FORM name="form1" action="/api/type" method="post" >
+                <SELECT NAME="province" onChange="getCity()" id="prov">
+                    <OPTION VALUE="0">请选择视频分类</OPTION>
+                    <option value="a"></option>
+                    <!--<OPTION VALUE="项目配套课程">项目配套课程</OPTION>-->
+                    <!--<OPTION VALUE="基础开发">基础开发</OPTION>-->
+                    <!--<OPTION VALUE="后端开发">后端开发</OPTION>-->
+                    <!--<OPTION VALUE="移动开发">移动开发</OPTION>-->
+                    <!--<OPTION VALUE="服务器端开发">服务器端开发</OPTION>-->
+                </SELECT>
+                <SELECT NAME="city">
+                    <OPTION VALUE="0">请选择视频类型</OPTION>
+                </SELECT>
+            </FORM>
+        </td>
+    </tr>
+    <br>
+        <td>上传视频：</td>
+        <td><input type="text">&nbsp;&nbsp;&nbsp;<div class="btn btn-default">附件</div></td>
+    </tr>
+    <tr>
+        <td>视频价格：</td>
+        <td>
+            <div class="input-group">
+                <span class="input-group-addon">$</span>
+                <input type="text" class="form-control" style="width:50px;">
+                <span class="input-group-addon">.00</span>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>制作人：</td>
+        <td><input type="text"></td>
+    </tr>
+    <tr>
+        <td style="vertical-align: top">视频简介:</td>
+        <td><textarea name="text" maxlength="150"  draggable='false' style="width: 200px;height: 100px;resize:none;"></textarea></td>
+    </tr>
+    <tr><td colspan="2" style="text-align: center"><div type="button" class="btn btn-primary">
+        上传视频
+    </div></td></tr>
+</table>
+
+<script src="http://cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+</body>
+</html>

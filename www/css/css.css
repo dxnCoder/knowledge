@@ -1,0 +1,54 @@
+.clear{clear: both;}
+*{margin: 0;padding: 0;font-family: "Times New Roman", "Times", 宋体; font-size: 16px;}
+a{text-decoration: none;}
+@media screen and (max-width: 768px){
+    #navtop{display: none}
+    #main{height: 200px;}
+    #dl1,#dl2{top:-30px;}
+    .div1{top:-55px}
+    .div2{top:-105px;}
+    #dl3,#dl4{position:relative;top:-55px;}
+    #dl5,#dl6{position:relative;top:-85px;}
+    #dl7,#dl8{position:relative;top:-95px;}
+    #dl9,#dl10{position:relative;top:-125px;}
+    footer{display: none}
+    #footer{display: block;line-height: 150px;}
+}
+@media screen and (min-width: 768px){
+    #navtop{display: block}
+    #navfoot{display: none}
+    #Divhead{display: none}
+    #main{position: relative;top:-20px;}
+    #dl1,#dl2{top:0;}
+    #sec{display: none}
+    .div1{top:-25px}
+    #dl3,#dl4,#dl5,#dl6{position:relative;top:-25px;}
+    .d,.div1{text-align: center;font-size: 28px;}
+    #Div{position:relative;top:-45px;}
+    #footer{display: none}
+    footer{display: block;}
+    .ifream{height:100%;}
+    #Divhead{display: none}
+}
+#Divhead{height: 50px;background: #49c865;font-size: 28px;color: white;font-weight: bold;line-height: 50px}
+#navfoot table{height: 50px;width: 100%;text-align: center;background: #49c865;color: white;font-weight: bolder}
+#navfoot table tr td{width: 25%}
+#navfoot a{color: white}
+#main{ margin-top: 0}
+#sec{width: 100%;height: 200px;border: solid 1px}
+#sec tr td{width: 25%;border: solid 1px;text-align: center}
+#sec td div{width: 50px;height: 50px;position: relative;margin: 0 auto;
+    border-radius:25px;border: 1px solid;text-align: center;line-height: 50px;
+    color: white;font-weight: bolder}
+#sec td div:hover{text-decoration: none;}
+.carousel-inner img{width: 100%}
+#sec td p{position: relative;top:10px;}
+.d{width: 100%;height: 50px;background: gainsboro;line-height: 50px;font-weight: bold;}
+.d span{float: right;}
+.div1 span{float: right;font-weight: bold;}
+.div2 span{float: right;font-weight: bold;}
+.div1{background:#49c865;height: 50px;position: relative;color: white;line-height: 50px;}
+.div2{background:rebeccapurple;height: 50px;position: relative;color: white;line-height: 50px;}
+dl{width: 50%;float: left;text-align: center;margin-top: 0;padding: 10px;line-height: 20px;}
+dl img{width: 98%;margin: 0 auto}
+#footer a{color: white}
