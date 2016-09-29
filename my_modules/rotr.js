@@ -179,6 +179,246 @@ _rotr.apis.more2 = function() {
     });
     return co;
 };
+//后台相关的接口....
 
+//课程类型
+_rotr.apis.courseType = function() {
+    var res={};
+    var ctx = this;
+    var co = $co(function* () {
+
+        var sqlstr="select ClassId,ClassName from class";
+        var dat={};
+        var rows=yield _ctnu([_mysql.conn,'query'],sqlstr);
+        if(!rows)throw Error("失败");
+        console.log(rows);
+        dat= rows;
+        ctx.body = dat;
+        return ctx;
+    });
+    return co;
+};
+
+_rotr.apis.courseTypeadd = function() {//课程类型添加
+    var res={};
+    var ctx = this;
+    var co = $co(function* () {
+        var id = ctx.query.id || ctx.request.body.id;
+        var name = ctx.query.name || ctx.request.body.name;
+        var sqlstr="insert into class set ClassId='"+id+"',ClassName='"+name+"'";
+        var dat={};
+        var regResult;
+        var rows=yield _ctnu([_mysql.conn,'query'],sqlstr);
+        if(!rows)throw Error("失败");
+        else{
+            regResult=1;
+        }
+        dat= regResult;
+        ctx.body = dat;
+        return ctx;
+    });
+    return co;
+};
+
+
+_rotr.apis.videoType = function() {//视频类型
+    var res={};
+    var ctx = this;
+    var co = $co(function* () {
+
+        var sqlstr="SELECT VideoclassId,VideoclassName,ClassName FROM videoclass,class where" +
+            " videoclass.ClassId=class.ClassId";
+        var dat={};
+        var rows=yield _ctnu([_mysql.conn,'query'],sqlstr);
+        if(!rows)throw Error("失败");
+
+        dat= rows;
+        ctx.body = dat;
+        return ctx;
+    });
+    return co;
+};
+
+_rotr.apis.videoSelect = function() {//视频查询
+    var res={};
+    var ctx = this;
+    var co = $co(function* () {
+        var name = ctx.query.ClassName || ctx.request.body.ClassName;
+        //var sqlstr="SELECT VideoclassId,VideoclassName,ClassId,ClassName FROM Alltypes ";
+        var sqlstr="SELECT VideoclassName FROM Alltypes where ClassName='"+name+"'";
+        var dat={};
+        var rows=yield _ctnu([_mysql.conn,'query'],sqlstr);
+        if(!rows)throw Error("失败");
+
+        dat= rows;
+        console.log(dat);
+        ctx.body = dat;
+        return ctx;
+    });
+    return co;
+};
+
+_rotr.apis.deletvideoType=function(){//视频类型删除
+    var res={};
+    var ctx=this;
+    var co=$co(function*(){
+        var name = ctx.query.name || ctx.request.body.name;
+        var regResult;
+        var sqlstr="delete FROM videoclass where VideoclassId='"+name+"'";
+        var dat={};
+        var row=yield _ctnu([_mysql.conn,'query'],sqlstr);
+        if(!row)throw Error("失败");
+        ctx.body=res;
+        return ctx;
+    });
+    return co;
+};
+//视频类型增加
+_rotr.apis.typeAdd = function() {
+    var ctx = this;
+    var co = $co(function* () {
+        var id = ctx.query.id || ctx.request.body.id;
+        var name = ctx.query.name || ctx.request.body.name;
+        var type = ctx.query.type || ctx.request.body.type;
+        var regResult;
+        var sqlstr="insert into videoclass set VideoclassId='"+id+"',VideoclassName='"+ name +"',ClassId=(select ClassId from class where ClassName='"+type+"')";
+        var dat={};
+        var rows=yield _ctnu([_mysql.conn,'query'],sqlstr);
+
+        if(!rows)throw Error("失败");
+        else{
+            regResult=1;
+        }
+
+        dat=(regResult);
+        ctx.body = dat;
+        return ctx;
+    });
+    return co;
+};
+
+
+_rotr.apis.video= function() {//视频
+    var res={};
+    var ctx = this;
+    var co = $co(function* () {
+        var sqlstr="SELECT VideoId,VideoName,VideoclassName,time,UserName,VideoSyno,VideoPrice,VideoGround,VideoPath" +
+            " FROM videoclass,video,user " +
+            "where video.videoclassId=videoclass.videoclassId and user.UserId=video.UserId";
+        var dat={};
+        var rows=yield _ctnu([_mysql.conn,'query'],sqlstr);
+        if(!rows)throw Error("失败");
+        dat= rows;
+        console.log(dat);
+        ctx.body = dat;
+        return ctx;
+    });
+    return co;
+};
+
+_rotr.apis.videoUpdate=function(){//视频编辑
+    var res={};
+    var ctx=this;
+    var co=$co(function*(){
+        var id = ctx.query.id || ctx.request.body.id;
+        var jiage = ctx.query.price || ctx.request.body.price;
+        var shangjia = ctx.query.grounding || ctx.request.body.grounding;
+        var regResult;
+        console.log(id+jiage,shangjia);
+        var sqlstr="update video set VideoPrice='"+jiage+"',VideoGround='"+shangjia+"' where VideoId='"+id+"'";
+        var dat={};
+        var row=yield _ctnu([_mysql.conn,'query'],sqlstr);
+        if(!row)throw Error("失败");
+        else{
+            var regResult=1;
+        }
+        res=regResult;
+        ctx.body=res;
+        return ctx;
+    });
+    return co;
+};
+_rotr.apis.deletvideo=function(){//视频删除
+    var res={};
+    var ctx=this;
+    var co=$co(function*(){
+        var name = ctx.query.name || ctx.request.body.name;
+        var regResult;
+        var sqlstr="delete FROM video where VideoId="+name;
+        var dat={};
+        var row=yield _ctnu([_mysql.conn,'query'],sqlstr);
+        if(!row)throw Error("失败");
+        ctx.body=res;
+        return ctx;
+    });
+    return co;
+};
+
+_rotr.apis.use= function() {//用户
+    var res={};
+    var ctx=this;
+    var co=$co(function*(){
+        var sqlstr="select UserId,UserName,UserType FROM user";
+        var dat={};
+        var row=yield _ctnu([_mysql.conn,'query'],sqlstr);
+        if(!row)throw Error("失败");
+
+        dat=row;
+        ctx.body=dat;
+        return ctx;
+    });
+    return co;
+};
+_rotr.apis.selectusr=function(){//用户删除准备
+    var res={};
+    var ctx=this;
+    var co=$co(function*(){
+        var name = ctx.query.name || ctx.request.body.name;
+        var res;
+        var sqlstr="select count(*) FROM video where UserId="+name;
+        var dat={};
+        var row=yield _ctnu([_mysql.conn,'query'],sqlstr);
+        if(!row)throw Error("失败");
+        dat=row[0]['count(*)'];
+        console.log(dat);
+        ctx.body=dat;
+        return ctx;
+    });
+    return co;
+};
+_rotr.apis.deleteusr=function(){//用户删除
+    var res={};
+    var ctx=this;
+    var co=$co(function*(){
+        var name = ctx.query.name || ctx.request.body.name;
+        var sqlstr="delete FROM user where UserId="+name;
+        var dat={};
+        var row=yield _ctnu([_mysql.conn,'query'],sqlstr);
+        if(!row)throw Error("失败");
+        res=row;
+        ctx.body=res;
+        return ctx;
+    });
+    return co;
+};
+_rotr.apis.Type = function() {//级联列表关联
+    var res={};
+    var ctx = this;
+    var name = ctx.query.name || ctx.request.body.name;
+    var co = $co(function* () {
+        var sqlstr="select VideoclassName from videoclass where ClassId=" +
+            "(select ClassId from class where ClassName='"+name+"')";
+        var dat={};
+        var rows=yield _ctnu([_mysql.conn,'query'],sqlstr);
+        if(!rows)throw Error("失败");
+
+        dat= rows;
+        console.log(name);
+        console.log(dat);
+        ctx.body = dat;
+        return ctx;
+    });
+    return co;
+};
 //导出模块
 module.exports = _rotr;
