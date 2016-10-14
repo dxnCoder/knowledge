@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <!--<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">-->
     <title>更多课程</title>
+
 </head>
 <body>
 <div>
@@ -14,11 +15,15 @@
         <!--</tr>-->
     <!--</table>-->
 </div>
+
 <div style="display: none">
     <table id="lesson1">
         <tr>
-            <td><img id="lesson_image1" src="" width="100px" height="100px"></td>
-            <td><div id="lesson_name1"></div></td>
+            <td><img id="lesson_image1" onclick="tiaozhuan()" src="" width="150px" height="100px"></td>
+            <td><div id="lesson_syno1" style="text-align: center;font-size: 13px;width: 100px"></div></td>
+            <!--新增超链接  点击后进入相应页面-->
+            <!--下方超链接路径新增，，，后期要到数据库提取，-->
+            <td><div id="lesson_name1" style="text-align: center;font-weight: bold"></div></td>
         </tr>
     </table>
 </div>

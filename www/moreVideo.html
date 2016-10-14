@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <!--<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">-->
     <title>更多课程</title>
+
 </head>
 <body>
 <div>
@@ -14,12 +15,16 @@
             <!--<th>课程名称</th>-->
         <!--</tr>-->
     <!--</table>-->
+    <h2 style="text-align: center">免费好课</h2>
 </div>
 <div style="display: none">
     <table id="lesson">
-        <tr>
-            <td><img id="lesson_image" src="" width="200px" height="100px"></td>
-            <td><div id="lesson_name"></div></td>
+       <tr>
+            <td><img id="lesson_image" onclick="tiaozhuan()" src="" width="150px" height="100px"></td>
+            <td><div id="lesson_syno" style="text-align: center;font-size: 13px;width: 100px"></div></td>
+            <!--新增超链接  点击后进入相应页面-->
+            <!--下方超链接路径新增，，，后期要到数据库提取，-->
+            <td><div id="lesson_name" style="text-align: center;font-weight: bold"></div></td>
         </tr>
     </table>
 </div>
@@ -27,5 +32,6 @@
 <script src="js/jquery-1.8.3.min.js"></script>
 <!--<script src="js/bootstrap.js"></script>-->
 <script src="js/moreVideo.js"></script>
+
 </body>
 </html>

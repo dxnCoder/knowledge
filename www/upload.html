@@ -14,7 +14,7 @@
     <script src="http://cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
     <style>
         h1{text-align: center}
-        table tr{height: 50px;}
+        table tr{height: 60px;}
     </style>
 
 </head>
@@ -22,49 +22,65 @@
 <h1>文件上传</h1>
 <table style="margin: 0 auto">
     <tr>
-        <td style="float: right;vertical-align: middle;line-height: 50px;">类型：</td>
+        <td style="float: right;vertical-align: middle;line-height: 50px;"> 类     型  ：</td>
         <td>
-            <select id="opbox" class="opt form-control" style="width: 50%;float: left"></select>
+            <select id="opbox" class="opt form-control" style="width: 50%;float: left"><option style="text-align: center;">请选择类型</option></select>
             <select id="type" class="form-control"  style="width: 50%;float: left"></select>
         </td>
     </tr>
     <!--与push的结合-->
     <tr>
-        <td>上传视频：</td>
-        <td><div id='shangchuan' class="btn btn-primary">上传文件:随机名</div>&nbsp;&nbsp;&nbsp;<div id='shangchuan2' class="btn btn-default">上传文件:指定路径</div></td>
+        <td><div id='shangchuan' class="btn btn-primary">视频上传</div></td>
+        <td><div style="width:100%;margin:12px;background:gray">
+            <div id='wancheng' style="background:green;width:0">0%</div></div></td>
+    </tr>
+    <tr class="path">
+        <td></td>
+        <td><a id='wenjian' href=''></a>
+        </td>
     </tr>
     <tr>
+        <td><div id='shangchuan2' class="btn btn-primary">视频图片上传</div></td>
+        <td><div style="width:100%;margin:12px;background:gray">
+            <div id='wancheng2' style="background:green;width:0">0%</div></div></td>
+    </tr>
+    <tr class="path1">
         <td></td>
-        <td>
-            <div style="width:200px;margin:12px;background:gray">
-                <div id='wancheng' style="background:green;width:0">0%</div>
-            </div>
+        <td><a id='wenjian2' href=''></a>
         </td>
+    </tr>
+    <tr>
+        <td>视频名称：</td>
+        <td><input type="text" style="width: 100%" id="name" placeholder="视频名称"></td>
     </tr>
     <tr>
         <td>视频价格：</td>
         <td>
             <div class="input-group">
                 <span class="input-group-addon">$</span>
-                <input type="text" class="form-control" style="width:50px;">
+                <input type="text" class="form-control" style="text-align: right" id="price" value="0">
                 <span class="input-group-addon">.00</span>
             </div>
         </td>
     </tr>
     <tr>
-        <td>制作人：</td>
-        <td><input type="text"></td>
-    </tr>
-    <tr>
         <td>视频简介:</td>
-        <td><textarea name="text" maxlength="150"  draggable='false' style="resize:none;"></textarea></td>
+        <td><textarea name="text" maxlength="500" Rows='5' draggable='false' style="resize:none;width: 100%" id="syno"  placeholder="视频简介，最多500字"></textarea></td>
     </tr>
     <tr>
-        <td colspan="2" style="text-align: center"><div type="button" class="btn btn-primary">上传视频</div></td>
+        <td colspan="2" style="text-align: center"><div onclick="Submit()" class="btn btn-primary">确定</div></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
     </tr>
 </table>
 <script src="http://m.xmgc360.com/pie/web/js/common.js"></script>
-<script src="push.js?aa=7899"></script>
+<script src="js/push.js?aa=7899"></script>
 <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
 <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <script src="js/upload.js"></script>

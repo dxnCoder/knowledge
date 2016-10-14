@@ -9,24 +9,10 @@
         table tr td{border: 1px solid;width: 10%}
         table{margin: 0 auto;width: 100%;padding: 0}
     </style>
-        <script type="text/javascript">
-                function del(usr){
-                            if (!confirm("确认要删除？")) {
-                                var kay=window.event.returnValue = false;
-                            }
-                            if(kay!=false) {
-                                var id = usr;
-                                var dat = {name: id};
-                                $.post('/api/deletvideo', dat, function (res) {
-                                    location.reload();
-                                })
-                            }
-                }
-        </script>
 </head>
 <body>
 <h3 style="text-align: center;font-weight:bolder">视 频 管 理</h3>
-<table>
+<table style="display: none">
     <tr id="courtype">
         <td><div id="Id"></div></td>
         <td><div id="name"></div></td>
@@ -36,7 +22,8 @@
         <td><div id="jiage"></div></td>
         <td><div id="time"></div></td>
         <td><div id="shangjia"></div></td>
-        <td><div id="lujing"></div></td>
+        <td><a id="img" href=''></a></td>
+        <td><a id="lujing" href=''></a></td>
         <td><div id="btn"></div></td>
     </tr>
 </table>
@@ -50,7 +37,8 @@
         <td>视频价格</td>
         <td>上传时间</td>
         <td>是否上架</td>
-        <td>路径</td>
+        <td>图片</td>
+        <td>视频</td>
         <td>操作</td>
     </tr>
 </table>

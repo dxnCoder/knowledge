@@ -2,7 +2,7 @@
  * Created by liu on 2016/9/18.
  */
 $(document).ready(function(){
-    $.post('/api/courseType',function(dat){
+    $.post('../api/courseType',function(dat){
         //$("#Id").html(dat[0]['ClassId']);
         //$("#name").html(dat[0]['ClassName']);
         for(var i=0;i<dat.length;i++){
@@ -38,7 +38,7 @@ function aaa(){
     }
     else{
         var dat={id:row1,name:row2};
-        $.post('/api/courseTypeadd',dat,function(res){
+        $.post('../api/courseTypeadd',dat,function(res){
             if(res==1){
                 alert('成功增加！')
             }

@@ -17,7 +17,7 @@
             if(kay!=false){
                 var id=usr;
                 var dat={name:id};
-                $.post('/api/deletvideoType',dat,function(res){
+                $.post('../api/deletvideoType',dat,function(res){
                     alert('删除成功！')
                 });
                 location.reload();

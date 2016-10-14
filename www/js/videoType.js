@@ -1,7 +1,7 @@
 /**
  * Created by liu on 2016/9/18.
  */
-    $.post('/api/videoType',function(dat){
+    $.post('../api/videoType',function(dat){
         //$("#Id").html(dat[0]['ClassId']);
         //$("#name").html(dat[0]['ClassName']);
         for(var i=0;i<dat.length;i++){
@@ -24,7 +24,7 @@ $("#add").click(function(){
         '</td>'+
         '<td style="width: 10%">'+
         '<div class="btn btn-default" onclick="aaa()" id="del">确定</div></td>');
-    $.post('/api/courseType', function (dat) {
+    $.post('../api/courseType', function (dat) {
         for (var i = 0; i < dat.length; i++) {
             $('#t3').append("<option>" + dat[i]['ClassName']+ "</option>");
         }
@@ -45,7 +45,7 @@ function aaa(){
     }
     else{
         var dat={id:row1,name:row2,type:row3};
-        $.post('/api/typeAdd',dat,function(res){
+        $.post('../api/typeAdd',dat,function(res){
             if(res==1){
                alert('成功增加！')
             }

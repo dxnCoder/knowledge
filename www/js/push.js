@@ -19,16 +19,16 @@ $('#shangchuan').click(function(){
 
 
 $('#shangchuan2').click(function(){
-    _fns.uploadFile('test-A',$('#shangchuan'),function(f){
+    _fns.uploadFile('test-A',$('#shangchuan2'),function(f){
         console.log('>>>>before2:',f);
     },function(f){
         console.log('>>>>progress2:',f);
-        $('#wancheng').css('width', f.percent + '%');
-        $('#wancheng').html(f.percent + '%');
+        $('#wancheng2').css('width', f.percent + '%');
+        $('#wancheng2').html(f.percent + '%');
     },function(f){
         console.log('>>>>success2:',f);
-        $('#wenjian').html(f.url);
-        $('#wenjian').attr('href', f.url)
+        $('#wenjian2').html(f.url);
+        $('#wenjian2').attr('href', f.url)
     });
 });
 console.log('>>>>FFF');

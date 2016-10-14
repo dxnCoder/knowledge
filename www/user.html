@@ -9,30 +9,6 @@
         body{text-align: center;}
         table{margin: 0 auto;width: 100%;}
     </style>
-    <script type="text/javascript">
-
-        function del(usr){
-//            var name=usr['UserName'];
-            var id=usr;
-            var dat={name:id};
-            $.post('/api/selectusr',dat,function(res){
-                if(res!=0){
-                    alert('该用户已上传视频，不能删除！');
-                }
-                else{
-                    if (!confirm("确认要删除？")) {
-                        var kay=window.event.returnValue = false;
-                    }
-                    if(kay!=false){
-                        var id=usr;
-                        var dat={name:id};
-                        $.post('/api/deleteusr',dat,function(res){
-                        })}
-                }
-            })
-
-        }
-    </script>
 </head>
 <body>
 <h3 style="text-align: center; font-weight: bolder">用 户 管 理</h3>
@@ -46,7 +22,7 @@
         <td><div id="Type"></div></td>
         <td><div id="btn"></div></td>
     </tr>
-    </table>
+</table>
 <table id="trbox" class="table table-striped">
     <tr>
         <td>用户编号</td>
