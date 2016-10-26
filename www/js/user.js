@@ -13,31 +13,39 @@ $.post('../api/use',function(dat){
         $('#trbox').append(usrjo);
     }
 });
-function del(usr){
-//            var name=usr['UserName'];
-    var id=usr;
-    var dat={name:id};
-    $.post('../api/selectusr',dat,function(res){
-        if(res!=0){
+function del(usr) {
+    var tname;
+    if (!e) {
+        var e = window.event;
+    }
+    //获取事件点击元素
+    var targ = e.target;
+    //获取元素名称
+    var cente = targ.parentNode.parentNode.parentNode;
+    var id = usr;
+    var dat = {name: id};
+    $.post('../api/selectusr', dat, function (res) {
+        if (res != 0) {
             alert('该用户已上传视频，不能删除！');
         }
-        else{
+        else {
             if (!confirm("确认要删除？")) {
-                var kay=window.event.returnValue = false;
+                var kay = window.event.returnValue = false;
             }
-            if(kay!=false){
-                var id=usr;
-                var dat={name:id};
-                $.post('../api/deleteusr',dat,function(rs){
-                    console.log(rs);
-                    if(rs==1){
-                        alert('删除成功！');
-                        location.reload();
-                    }else{
-                        alert('删除失败！');
-                    }
+            if (kay != false) {
+                var id = usr;
+                var dat = {name: id};
 
-                })}
+                $.post('../api/deleteusr', dat, function (res) {
+                    if (res == 1) {
+                        alert('删除成功！');
+                        cente.remove();
+                    }
+                    else {
+                        alert("删除失败！");
+                    }
+                })
+            }
         }
     })
 

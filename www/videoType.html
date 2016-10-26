@@ -4,54 +4,32 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
-        <style>
-            input{width: 100%}
-        body{text-align: center;}
-        table{margin: 0 auto;width: 100%}
-    </style>
-    <script type="text/javascript">
-        function del(usr){
-            if (!confirm("确认要删除？")) {
-                var kay=window.event.returnValue = false;
-            }
-            if(kay!=false){
-                var id=usr;
-                var dat={name:id};
-                $.post('../api/deletvideoType',dat,function(res){
-                    alert('删除成功！')
-                });
-                location.reload();
-            }
-        }
-
-    </script>
-
 </head>
 <body>
-<h3 style="text-align: center;font-weight: bolder">视 频 类 型 管 理</h3>
-<br/>
-<table>
-    <tr id="courtype">
-        <td style="width: 30%"><div id="Id"></div></td>
-        <td style="width: 30%"><div id="name"></div></td>
-        <td style="width: 30%"><div id="Courname"></div></td>
-        <td style="width: 10%"><div  id="btn"></div></td>
-    </tr>
-</table>
-<table id="trbox"  class="table table-striped">
-    <tr>
-        <td style="width: 30%">视频编号</td>
-        <td style="width: 30%">视频类型</td>
-        <td style="width: 30%">所属课程</td>
-        <td style="width: 10%">操作</td>
-    </tr>
-</table>
-<table id="table" class="table table-striped"></table>
-<div class="btn btn-default" id="add">增加</div>
-<br/>
-<br/>
+<div style="clear: both;height: 10px"></div>
+<div style="display: none">
+    <div id="courtype">
+        <div id="name">
+        </div>
+    </div>
+</div><div><div id="trbox"></div></div>
+<div style="clear: both;height: 10px"></div>
+<div style="display: none">
+    <div id="lesson" onclick="see()">
+        <div style="clear: both"></div>
+        <div style="position: relative;left: 10px;">
+            <img id="lesson_image" src="" width="50%" height="100px" style="float: left">
+            <div style="float: left;position: relative;right: 50%;background-color: black;opacity:0.5;width: 50%;top:80px;color: white;text-align: center;font-size: 15px;"><span class="glyphicon glyphicon-user"></span>&nbsp;<span id="people"></span><span>人观看</span></div>
+        </div>
+        <div id="videoname" style="position: relative;left:20px;top:-20px;font-size: 20px;font-weight: bold"></div>
+        <div id="videoPrice" style="position: relative;top:30px;left:20px;color: red"></div>
+        <div style="clear: both;"></div>
+        <hr/>
+    </div></div>
+<div id="box"></div>
+
+</body>
 <script src="js/jquery-3.1.0.js"></script>
 <script src="js/bootstrap.js"></script>
-<script src="js/videoType.js"></script>
-</body>
+<script src="js/videotypePage.js"></script>
 </html>

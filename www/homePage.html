@@ -52,87 +52,69 @@
     </div>
     <table id="sec">
         <tr>
-            <td><a href="CoursesCategories.html/#ClassType"><div style="background:#428bca">基</div><p>基础开发</p></a></td>
-            <td><a href="CoursesCategories.html/#Server"><div style="background:#5cb85c">服</div><p>服务器端</p></a></td>
-            <td><a href="CoursesCategories.html/#Mobile"><div style="background:#5bc0de">移</div><p>移动技术</p></a></td>
-            <td><a href="CoursesCategories.html/#Data"><div style="background:#f0ad4e">数</div><p>数据分析</p></a></td>
+            <td onclick="cli(0)"><div style="background:#428bca">基</div><span>基础开发</span></td>
+            <td onclick="cli(1)"><div style="background:#5cb85c">服</div><span>服务器端开发</span></td>
+            <td onclick="cli(2)"><div style="background:#5bc0de">移</div><span>移动开发</span></td>
+            <td onclick="cli(3)"><div style="background:#f0ad4e">数</div><span>数据分析</span></td>
         </tr>
         <tr>
-            <td><a href="CoursesCategories.html"><div style="background:#d9534f">技</div><p>技术前沿</p></a></td>
-            <td><a href="CoursesCategories.html"><div style="background:#777">设</div><p>设计交互</p></a></td>
-            <td><a href="CoursesCategories.html"><div style="background:greenyellow">创</div><p>创业课程</p></a></td>
-            <td><a href="CoursesCategories.html"><div style="background:rosybrown">更</div><p>更多</p></a></td>
+            <td onclick="cli(4)"><div style="background:#d9534f">技</div><span>技术前沿</span></td>
+            <td onclick="cli(5)"><div style="background:#777">设</div><span>交互设计</span></td>
+            <td onclick="cli(6)"><div style="background:greenyellow">创</div><span>创业课程</span></td>
+            <td><a href="CoursesCategories.html"><div style="background:rosybrown">更</div><span>更多</span></a></td>
         </tr>
     </table>
     <div>
         <div style="height: 10px;"></div>
         <div class="d">&nbsp;&nbsp;&nbsp;免费好课<span><a href="moreVideo.html"> 更多>></a></span></div>
-        <dl class="col-xs-6 col-sm-4 col-md-3">
-            <dt><a href="#"><img src="images/file_copy_1.jpg"></a></dt>
-            <dd>课程名称</dd>
-        </dl>
-        <dl class="col-xs-6 col-sm-4 col-md-3">
-            <dt><a href="#"><img src="images/file_copy_2.jpg"></a></dt>
-            <dd>课程名称</dd>
-        </dl>
-        <dl class="col-xs-6 col-sm-4 col-md-3" id="dl1">
-            <dt><a href="#"><img src="images/file_copy_3.jpg"></a></dt>
-            <dd>课程名称</dd>
-        </dl>
-        <dl class="col-xs-6 col-sm-4 col-md-3" id="dl2">
-            <dt><a href="#"><img src="images/file_copy_1.jpg"></a></dt>
-            <dd>课程名称</dd>
-        </dl>
+        <div  style="height: 10px;"></div>
+        <div style="display: none">
+            <dl class="col-xs-6 col-sm-4 col-md-3" id="lesson1" onclick="tiaozhuan()">
+            <dt><img src="" id="image1"></dt>
+            <dd><div id="name1"></div><div id="video_id1" style="display:none"></div></dd>
+            </dl>
+        </div>
+        <div id="box1"></div></div>
+<div class="clear"></div>
+    <div>
+    <div class="div1">&nbsp;&nbsp;&nbsp;精品畅销<span><a href="moreVideo1.html"> 更多>></a></span></div>
+        <div  style="height: 10px;"></div>
+    <div style="display: none">
+        <dl class="col-xs-6 col-sm-4 col-md-3" id="lesson2" onclick="tiaozhuan()">
+        <dt><img src="" id="image2"></dt>
+        <dd><div id="name2"></div><div id="video_id2" style="display:none"></div></dd>
+    </dl>
     </div>
-    <div class="clear"></div>
-    <div class="div1">&nbsp;&nbsp;&nbsp;精品畅销<span><a href="moreVideo1.html"> 更多>></a></span> </div>
-    <dl class="col-xs-6 col-sm-4 col-md-3" id="dl3">
-        <dt><a href="#"><img src="images/file_copy_4.jpg"></a></dt>
-        <dd>课程名称</dd>
-    </dl>
-    <dl class="col-xs-6 col-sm-4 col-md-3" id="dl4">
-        <dt><a href="#"><img src="images/file_copy_5.jpg"></a></dt>
-        <dd>课程名称</dd>
-    </dl>
-    <dl class="col-xs-6 col-sm-4 col-md-3" id="dl5">
-        <dt><a href="#"><img src="images/file_copy_3.jpg"></a></dt>
-        <dd>课程名称</dd>
-    </dl>
-    <dl class="col-xs-6 col-sm-4 col-md-3" id="dl6">
-        <dt><a href="#"><img src="images/file_copy_1.jpg"></a></dt>
-        <dd>课程名称</dd>
-    </dl>
-    <div id="Div">
-        <div class="clear"></div>
-        <!--id的更改，，要实现页面的传参，根据所传参数，动态获取更多界面-->
+    <div id="box2"></div>
+    </div>
+
+<div class="clear"></div>
+    <div>
         <div class="div2" >&nbsp;&nbsp;&nbsp;编程开发<span><a href="moreVideo2.html">更多>></a></span></div>
-        <dl class="col-xs-6 col-sm-4 col-md-3" id="dl7">
-            <dt><a href="#"><img src="images/file_copy_5.jpg"></a></dt>
-            <dd>课程名称</dd>
-        </dl>
-        <dl class="col-xs-6 col-sm-4 col-md-3" id="dl8">
-            <dt><a href="#"><img src="images/file_copy_3.jpg"></a></dt>
-            <dd>课程名称</dd>
-        </dl>
-        <dl class="col-xs-6 col-sm-4 col-md-3" id="dl9">
-            <dt><a href="#"><img src="images/file_copy_1.jpg"></a></dt>
-            <dd>课程名称</dd>
-        </dl>
-        <dl class="col-xs-6 col-sm-4 col-md-3" id="dl10">
-            <dt><a href="#"><img src="images/file_copy_2.jpg"></a></dt>
-            <dd>课程名称</dd>
-        </dl>
+        <div  style="height: 10px;"></div>
+        <div style="display: none">
+            <dl class="col-xs-6 col-sm-4 col-md-3" id="lesson3" onclick="tiaozhuan()">
+                <dt><img src="" id="image3"></dt>
+                <dd><div id="name3"></div><div id="video_id3" style="display:none"></div></dd>
+            </dl>
+        </div>
+        <div id="box3"></div>
     </div>
     <div class="clear"></div>
+
+
+
+
     <footer>
-        <hr style="color:black;position:relative;top:-70px;"/>
-        <div style="position:relative;top:-40px;line-height: 10px;text-align: center;font-size: 20px;">知识与市场由第三小队制作</div>
+        <hr style="color:black;top:-70px;"/>
+        <div style="top:-40px;line-height: 10px;text-align: center;font-size: 20px;">知识与市场由第三小队制作</div>
     </footer>
     <div class="clear"></div>
-    <div id="footer" style="height: 150px;position: relative;background: rosybrown;top:-120px;width: 100%;line-height: 130px;text-align: center;font-weight: bolder"><a href="CoursesCategories.html/#ClassType" class="color: white;">已经到底了，查看更多>></a></div>
+    <div id="footer" style="height: 150px;background: rosybrown;top:-120px;width: 100%;line-height: 130px;text-align: center;font-weight: bolder"><a href="CoursesCategories.html" class="color: white;">已经到底了，查看更多>></a></div>
 
 </div>
-<script src="http://cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
-<script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="js/jquery-3.1.0.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/homePage.js"></script>
 </body>
 </html>

@@ -51,14 +51,30 @@ function edit(rowId){
     })
 }
 function del(usr){
+    var tname;
+    if(!e){
+        var e = window.event;
+    }
+    //获取事件点击元素
+    var targ = e.target;
+    //获取元素名称
+    var cente=targ.parentNode.parentNode.parentNode;
+    console.log("图片",cente);
     if (!confirm("确认要删除？")) {
         var kay=window.event.returnValue = false;
     }
     if(kay!=false) {
         var id = usr;
         var dat = {name: id};
+
         $.post('../api/deletvideo', dat, function (res) {
-            location.reload();
+            if(res==1){
+                alert('删除成功！');
+                cente.remove();
+            }
+            else{
+                alert("删除失败！");
+            }
         })
     }
 }

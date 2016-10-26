@@ -4,20 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
-    <script src="js/jquery-1.8.3.js" type="text/javascript"></script>
+    <script src="js/jquery-3.1.0.js" type="text/javascript"></script>
     <link rel="stylesheet" href="css/css.css" type="text/css">
     <title>后台管理</title>
     <style>
         table tr td:hover{background: green}
+        #login:hover{text-decoration: none}
+        #login:visited{text-decoration: none}
     </style>
     <script type="text/javascript">
-        $(function(){
-            $("#Img").toggle(function(){
-                $("#sosuo").css("display","block");
-            },function(){
-                $("#sosuo").css("display","none");
-            });
-        })
         var documentURL=document.referrer;
         if(documentURL==""){
             alert("请先通过登录验证！");
@@ -117,7 +112,7 @@
             <tr>
                 <td id="t1"><a href="homePage.html" target="iframe" class="t1">首页</a></td>
                 <td id="t2"><a href="CoursesCategories.html" target="iframe" class="t2">全部课程</a></td>
-                <td id="w3"><a href="study.html" target="iframe" class="t3" >我的学习</a></td>
+                <td id="w3"><a href="studyHistory.html" target="iframe" class="t3" >我的学习</a></td>
                 <td id="t4"><a href="acount.html" target="iframe" class="t4">账号</a></td>
             </tr>
         </table>
@@ -125,11 +120,11 @@
 </nav>
 <div id="main">
     <div id="Divhead">
-        &nbsp;&nbsp;<img src="images/login.png"><span>知识与市场</span>
-        <img id="Img" src="images/img.png" style="right: 10px;position: absolute">
+        &nbsp;&nbsp;<a id="login" href="homePage.html" target="iframe"><img src="images/login.png"><span style="color: white">知识与市场</span></a>
+        <a href="sousuo.html" target="iframe"><img id="Img" src="images/img.png" style="right: 10px;position: absolute"></a>
     </div>
 
-     <iframe class="iframe" src="homePage.html" name="iframe" frameborder="0" scrolling="yes" width="100%" height="600px;"></iframe>
+    <iframe id="iframe" src="homePage.html" name="iframe" frameborder="0" scrolling="yes" width="100%" height="630px;" ></iframe>
 </div>
 <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <script src="js/chkLogin.js"></script>

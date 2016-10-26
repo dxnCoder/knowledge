@@ -90,7 +90,7 @@ _rotr.apis.test = function() {
 _rotr.apis.more = function() {
     var ctx = this;
     var co = $co(function* () {
-        var sqlstr="select VideoSyno,Imgpath,VideoName from mydb.video where VideoPrice = 0";
+        var sqlstr="select VideoId,OverPeople,Imgpath,VideoName from mydb.video where VideoPrice = 0";
         var dat={};
         var rows=yield _ctnu([_mysql.conn,'query'],sqlstr);
         if(!rows)throw Error("失败");
@@ -105,7 +105,7 @@ _rotr.apis.more = function() {
 _rotr.apis.more1 = function() {
     var ctx = this;
     var co = $co(function* () {
-        var sqlstr="select VideoSyno,ImgPath,VideoName from mydb.video where VideoGood > 0";
+        var sqlstr="select VideoId,OverPeople,ImgPath,VideoName,VideoPrice from mydb.video where Purchase > 0";
         var dat={};
         var rows=yield _ctnu([_mysql.conn,'query'],sqlstr);
         if(!rows)throw Error("失败");
@@ -120,7 +120,7 @@ _rotr.apis.more1 = function() {
 _rotr.apis.more2 = function() {
     var ctx = this;
     var co = $co(function* () {
-        var sqlstr="select VideoSyno,ImgPath,VideoName from mydb.video where VideoPrice > 1";
+        var sqlstr="select VideoId,OverPeople,ImgPath,VideoName,VideoPrice from mydb.video where VideoPrice > 1";
         var dat={};
         var rows=yield _ctnu([_mysql.conn,'query'],sqlstr);
         if(!rows)throw Error("失败");
@@ -132,6 +132,49 @@ _rotr.apis.more2 = function() {
     return co;
 };
 
+_rotr.apis.mianfei = function() {
+    var ctx = this;
+    var co = $co(function* () {
+        var sqlstr="select VideoId,VideoName,ImgPath from video where VideoPrice='0' and VideoGround='是' order by OverPeople limit 4";
+        var dat={};
+        var rows=yield _ctnu([_mysql.conn,'query'],sqlstr);
+        if(!rows)throw Error("失败");
+        dat= rows;
+        console.log(dat);
+        ctx.body = dat;
+        return ctx;
+    });
+    return co;
+};
+
+_rotr.apis.changxiao = function() {
+    var ctx = this;
+    var co = $co(function* () {
+        var sqlstr="select VideoId,VideoName,ImgPath,VideoPrice from video where VideoPrice>'0' and VideoGround='是' order by Purchase limit 4";
+        var dat={};
+        var rows=yield _ctnu([_mysql.conn,'query'],sqlstr);
+        if(!rows)throw Error("失败");
+        dat= rows;
+        console.log(dat);
+        ctx.body = dat;
+        return ctx;
+    });
+    return co;
+};
+
+_rotr.apis.haoke = function() {
+    var ctx = this;
+    var co = $co(function* () {
+        var sqlstr="select VideoId,VideoName,ImgPath,VideoPrice from video where VideoGround='是' order by OverPeople and VideoPrice='0' limit 4";
+        var dat={};
+        var rows=yield _ctnu([_mysql.conn,'query'],sqlstr);
+        if(!rows)throw Error("失败");
+        dat= rows;
+        ctx.body = dat;
+        return ctx;
+    });
+    return co;
+};
 
 
 _rotr.apis.courseType = function() {
@@ -196,7 +239,7 @@ _rotr.apis.videoSelect = function() {//视频类型查询
     var co = $co(function* () {
         var dat={};
         var VideoclassId = ctx.query.VideoclassId || ctx.request.body.VideoclassId;
-        var name = ctx.query.ClassName || ctx.request.body.ClassName;
+        var id = ctx.query.ClassId || ctx.request.body.ClassId;
         var VideoclassName = ctx.query.VideoclassName || ctx.request.body.VideoclassName;
         var mianfei = ctx.query.mianfei || ctx.request.body.mianfei;
         var fufei = ctx.query.fufei || ctx.request.body.fufei;
@@ -207,8 +250,8 @@ _rotr.apis.videoSelect = function() {//视频类型查询
             var sqlstr1="select VideoclassId from videoclass where VideoclassName='"+VideoclassName+"'";
             var rows=yield _ctnu([_mysql.conn,'query'],sqlstr1);
         }
-        if(name){
-            var sqlstr="SELECT VideoclassName,VideoclassId FROM videoclass where ClassId=(select ClassId from class where ClassName='"+name+"')";
+        if(id){
+            var sqlstr="SELECT VideoclassName,VideoclassId FROM videoclass where ClassId='"+id+"'";
             var rows=yield _ctnu([_mysql.conn,'query'],sqlstr);
         }
         if(VideoclassId){
@@ -242,14 +285,21 @@ _rotr.apis.videoSelect = function() {//视频类型查询
     return co;
 };
 
+
 _rotr.apis.Select = function() {//视频个数查询
     var res={};
     var ctx = this;
     var co = $co(function* () {
         var dat={};
         var VideoclassId = ctx.query.VideoclassId || ctx.request.body.VideoclassId;
-        var sqlstr="select count(*) as 总数 from video where VideoclassId='"+VideoclassId+"' and VideoGround='是'";
-        var rows=yield _ctnu([_mysql.conn,'query'],sqlstr);
+        var ClassName=ctx.query.ClassName || ctx.request.body.ClassName;
+        if(VideoclassId){
+            var sqlstr="select count(*) as 总数 from video where VideoclassId='"+VideoclassId+"' and VideoGround='是'";
+            var rows=yield _ctnu([_mysql.conn,'query'],sqlstr);}
+        if(ClassName){
+            var sqlstr1="select ClassId from class where ClassName='"+ClassName+"'";
+            var rows=yield _ctnu([_mysql.conn,'query'],sqlstr1);
+        }
         if(!rows)throw Error("失败");
 
         dat= rows;
@@ -259,6 +309,7 @@ _rotr.apis.Select = function() {//视频个数查询
     });
     return co;
 };
+
 
 //视频类型删除准备
 _rotr.apis.selectvideoType=function(){
@@ -328,14 +379,14 @@ _rotr.apis.xianshi= function() {//视频显示
     var co = $co(function* () {
         var dat={};
         var id = ctx.query.VideoclassId || ctx.request.body.VideoclassId;
-        var ClassName = ctx.query.ClassName || ctx.request.body.ClassName;
+        var ClassId = ctx.query.ClassId || ctx.request.body.ClassId;
         if(id){
             var sqlstr="SELECT VideoName,VideoSyno,VideoPrice,VideoGood,OverPeople," +
                 "VideoPath,ImgPath FROM video where VideoGround='是' and VideoclassId='"+id+"'";
             var rows=yield _ctnu([_mysql.conn,'query'],sqlstr);}
-        if(ClassName){
-            var sqlstr1="select * from videoclass left join class on videoclass.ClassId=class.ClassId and ClassName='"+ClassName+"'" +
-                "inner join video on videoclass.VideoclassId=video.VideoclassId and VideoGround='是'";
+        if(ClassId){
+            var sqlstr1="select * from videoclass " +
+                "inner join video on videoclass.VideoclassId=video.VideoclassId and VideoGround='是' and ClassId='"+ClassId+"'";
             var rows=yield _ctnu([_mysql.conn,'query'],sqlstr1);
         }
         if(!rows)throw Error("失败");
@@ -348,6 +399,7 @@ _rotr.apis.xianshi= function() {//视频显示
 };
 
 
+//可新增判断语句，判断是否上传过
 _rotr.apis.upload= function() {//视频上传
     var res={};
     var ctx = this;
@@ -538,42 +590,346 @@ _rotr.apis.Type = function() {
 };
 
 
+
+
+_rotr.apis.uploadPage= function() {//我的上传
+    var res={};
+    var ctx = this;
+    var co = $co(function* () {
+        var userId = ctx.query.userId || ctx.request.body.userId;
+        var sqlstr="select VideoId,VideoName,VideoSyno,VideoPrice,time,VideoGround,VideoPath,ImgPath from video where UserId='"+userId+"'";
+        var dat={};
+        var rows=yield _ctnu([_mysql.conn,'query'],sqlstr);
+        if(!rows)throw Error("失败");
+        dat=rows;
+        console.log(dat);
+        ctx.body = dat;
+        return ctx;
+    });
+    return co;
+};
+
+_rotr.apis.UserType = function(){//用户类型查询
+    var ctx = this;
+    var co = $co(function * () {
+        var userId = ctx.query.id || ctx.request.body.id;
+        var dat={};
+        var sqlstr="select ImgPath,UserNick,UserType,UserName from user where UserId='"+userId+"'";
+        var rows = yield _ctnu([_mysql.conn,'query'],sqlstr);
+        if(!rows)throw Error("失败");
+        dat = rows;
+        console.log(dat);
+        ctx.body = dat;
+        return ctx;
+    });
+    return co;
+};
+
+_rotr.apis.selectshopp = function(){//添加准备
+    var ctx = this;
+    var co = $co(function * () {
+        var userId = ctx.query.userId || ctx.request.body.userId;
+        var videoId=ctx.query.videoId || ctx.request.body.videoId;
+        var dat={};
+        var sqlstr="select * from orderinfo where VideoId='"+videoId+"' and UserId='"+userId+"'";
+        var rows = yield _ctnu([_mysql.conn,'query'],sqlstr);
+        if(!rows)throw Error("失败");
+        dat=rows;
+        ctx.body = dat;
+        return ctx;
+    });
+    return co;
+};
+
+
+_rotr.apis.shopping = function(){//购物车添加
+    var ctx = this;
+    var co = $co(function * () {
+        var userId = ctx.query.userId || ctx.request.body.userId;
+        var videoId=ctx.query.videoId || ctx.request.body.videoId;
+        var dat={};
+        var sqlstr="insert into orderinfo (VideoId,UserId) values ('"+videoId+"','"+userId+"')";
+        var rows = yield _ctnu([_mysql.conn,'query'],sqlstr);
+        if(!rows)throw Error("失败");
+        else{
+            var result=1;
+        }
+        dat=result;
+        ctx.body = dat;
+        return ctx;
+    });
+    return co;
+};
+
+_rotr.apis.selectshopping = function(){//购物车查询
+    var ctx = this;
+    var co = $co(function * () {
+        var userId = ctx.query.id || ctx.request.body.id;
+        var dat={};
+        var sqlstr="select orderinfo.VideoId as VideoId,orderinfo.UserId as UserId,VideoName,VideoPrice,ImgPath " +
+            "from orderinfo,video where orderinfo.VideoId=video.VideoId and orderinfo.UserId='"+userId+"' and OrderId is null";
+        var rows = yield _ctnu([_mysql.conn,'query'],sqlstr);
+        if(!rows)throw Error("失败");
+        dat = rows;
+        ctx.body = dat;
+        return ctx;
+    });
+    return co;
+};
+
+_rotr.apis.deletshopping=function(){//购物车删除
+    var res={};
+    var ctx=this;
+    var co=$co(function*(){
+        var name= ctx.query.name || ctx.request.body.name;
+        var id= ctx.query.id || ctx.request.body.id;
+        var dat={};
+        if(name){
+            var sqlstr="delete FROM orderinfo where VideoId="+name;
+            var row=yield _ctnu([_mysql.conn,'query'],sqlstr);
+        }
+        if(id){
+            var sqlstr1="delete FROM orderinfo where UserId="+id;
+            var row=yield _ctnu([_mysql.conn,'query'],sqlstr1);
+        }
+        if(!row)throw Error("失败");
+        else{
+            var regResult=1;
+        }
+        res=regResult;
+        ctx.body=res;
+        return ctx;
+    });
+    return co;
+};
+
+_rotr.apis.order=function(){//添加订单
+    var res={};
+    var ctx=this;
+    var co=$co(function*(){
+        var videoid= ctx.query.videoid || ctx.request.body.videoid;
+        var userid= ctx.query.userid || ctx.request.body.userid;
+        var time= ctx.query.time || ctx.request.body.time;
+        var OrderId= ctx.query.orderId || ctx.request.body.orderId;
+        var price= ctx.query.price || ctx.request.body.price;
+        var dat={};
+        console.log(time);
+        for (var i=0;i<videoid.length;i++){
+            var sqlstr="update orderinfo set OrderId='"+OrderId+"' where VideoId='"+videoid[i]+"' and UserId='"+userid+"'";
+            var row=yield _ctnu([_mysql.conn,'query'],sqlstr);
+            if(!row)throw Error("失败");
+        }
+        var sqlstr1="insert into mydb.`order` values ('"+OrderId+"','"+userid+"','"+time+"','"+price+"','否')";
+        var rows=yield _ctnu([_mysql.conn,'query'],sqlstr1);
+        if(!rows)throw Error("失败");
+        else{
+            var regResult=1;
+        }
+        res=regResult;
+        ctx.body=res;
+        return ctx;
+    });
+    return co;
+};
+
+_rotr.apis.selectorder=function(){//查询订单
+    var res={};
+    var ctx=this;
+    var co=$co(function*(){
+        var userid= ctx.query.userid || ctx.request.body.userid;
+        var orderid= ctx.query.orderid || ctx.request.body.orderid;
+        var id= ctx.query.id || ctx.request.body.id;
+        var Ordeid= ctx.query.Ordeid || ctx.request.body.Ordeid;
+        console.log(orderid);
+        var dat={};
+        if(userid){
+            var sqlstr1="select * from mydb.`order` where UserId='"+userid+"'";
+            var rows=yield _ctnu([_mysql.conn,'query'],sqlstr1);
+            if(!rows)throw Error("失败");
+        }
+        if(id){
+            var sqlstr3="select * from mydb.`order` where UserId='"+id+"' and OrderType='是'";
+            var rows=yield _ctnu([_mysql.conn,'query'],sqlstr3);
+            if(!rows)throw Error("失败");
+        }
+        if(Ordeid){
+            var sqlstr4="select * from mydb.`order` where UserId='"+Ordeid+"' and OrderType='否'";
+            var rows=yield _ctnu([_mysql.conn,'query'],sqlstr4);
+            if(!rows)throw Error("失败");
+        }
+        if(orderid){
+            var sqlstr2="select VideoId,VideoName,VideoPrice,ImgPath from video where VideoId in(select VideoId from orderinfo where OrderId='"+orderid+"')";
+            var rows=yield _ctnu([_mysql.conn,'query'],sqlstr2);
+            if(!rows)throw Error("失败");
+        }
+        console.log(rows);
+        res=rows;
+        ctx.body=res;
+        return ctx;
+    });
+    return co;
+};
+
+_rotr.apis.deleteorder=function(){//删除订单
+    var res={};
+    var ctx=this;
+    var co=$co(function*(){
+        var OrderId= ctx.query.orderId || ctx.request.body.orderId;
+        var dat={};
+        var sqlstr="delete from orderinfo where OrderId='"+OrderId+"'";
+        var row=yield _ctnu([_mysql.conn,'query'],sqlstr);
+        if(!row)throw Error("失败");
+        var sqlstr1="delete from mydb.`order` where OrderId='"+OrderId+"'";
+        var rows=yield _ctnu([_mysql.conn,'query'],sqlstr1);
+        if(!rows)throw Error("失败");
+        else{
+            var regResult=1;
+        }
+        res=regResult;
+        ctx.body=res;
+        return ctx;
+    });
+    return co;
+};
+
+_rotr.apis.buy=function(){//购买订单
+    var res={};
+    var ctx=this;
+    var co=$co(function*(){
+        var OrderId= ctx.query.orderId || ctx.request.body.orderId;
+        var dat={};
+        var sqlstr2="update video set Purchase=Purchase+1 where VideoId in (select VideoId from orderinfo where OrderId='"+OrderId+"')";
+        var rows=yield _ctnu([_mysql.conn,'query'],sqlstr2);
+        if(!rows)throw Error("失败");
+        var sqlstr1="update mydb.`order` set OrderType='是' where OrderId='"+OrderId+"'";
+        var rows=yield _ctnu([_mysql.conn,'query'],sqlstr1);
+        if(!rows)throw Error("失败");
+        else{
+            var regResult=1;
+        }
+        res=regResult;
+        ctx.body=res;
+        return ctx;
+    });
+    return co;
+};
+
+_rotr.apis.keep = function(){//收藏
+    var ctx = this;
+    var co = $co(function * () {
+        var userId = ctx.query.userId || ctx.request.body.userId;
+        var videoId=ctx.query.videoId || ctx.request.body.videoId;
+        var time=ctx.query.time || ctx.request.body.time;
+        var dat={};
+        var sqlstr="insert into keep (VideoId,UserId,KeepTime) values ('"+videoId+"','"+userId+"','"+time+"')";
+        var rows = yield _ctnu([_mysql.conn,'query'],sqlstr);
+        if(!rows)throw Error("失败");
+        else{
+            result=1;
+        }
+        dat=result;
+        ctx.body = dat;
+        return ctx;
+    });
+    return co;
+};
+
+_rotr.apis.keepselect = function(){//收藏准备
+    var ctx = this;
+    var co = $co(function * () {
+        var userId = ctx.query.userId || ctx.request.body.userId;
+        var videoId=ctx.query.videoId || ctx.request.body.videoId;
+        var time=ctx.query.time || ctx.request.body.time;
+        var dat={};
+        var sqlstr2="select * from keep where VideoId='"+videoId+"' and UserId='"+userId+"'";
+        var rows = yield _ctnu([_mysql.conn,'query'],sqlstr2);
+        if(!rows)throw Error("失败");
+        dat=rows;
+        ctx.body = dat;
+        return ctx;
+    });
+    return co;
+};
+
+_rotr.apis.selectkeep = function(){//收藏查询
+    var ctx = this;
+    var co = $co(function * () {
+        var userId = ctx.query.id || ctx.request.body.id;
+        var dat={};
+        var sqlstr="select keep.VideoId as VideoId,keep.UserId as UserId,VideoName,VideoPrice,ImgPath,KeepTime " +
+            "from keep,video where keep.VideoId=video.VideoId and keep.UserId='"+userId+"'";
+        var rows = yield _ctnu([_mysql.conn,'query'],sqlstr);
+        if(!rows)throw Error("失败");
+        dat = rows;
+        console.log(dat);
+        ctx.body = dat;
+        return ctx;
+    });
+    return co;
+};
+
+_rotr.apis.deletekeep = function(){//收藏删除
+    var ctx = this;
+    var co = $co(function * () {
+        var videoId = ctx.query.id || ctx.request.body.id;
+        var userId= ctx.query.userId || ctx.request.body.userId;
+        var dat={};
+        console.log(videoId,userId);
+        var sqletr="delete from keep where VideoId='"+videoId+"' and UserId='"+userId+"'";
+        var rows = yield _ctnu([_mysql.conn,'query'],sqletr);
+        if(!rows)throw Error("失败");
+        else{
+            var result=1;
+        }
+        dat=result;
+        ctx.body = dat;
+        return ctx;
+    });
+    return co;
+};
+
+_rotr.apis.selectbuy = function(){//购买的视频
+    var ctx = this;
+    var co = $co(function * () {
+        var userId= ctx.query.userId || ctx.request.body.userId;
+        var dat={};
+        console.log(userId);
+        var sqletr="select video.VideoId,VideoName,ImgPath,OrderTime from video,(select orderinfo.VideoId,OrderTime from orderinfo,mydb.`order` where mydb.`order`.UserId='"+userId+"' and OrderType='是' and orderinfo.OrderId=mydb.`order`.OrderId) c where video.VideoId=c.VideoId" ;        var rows = yield _ctnu([_mysql.conn,'query'],sqletr);
+        if(!rows)throw Error("失败");
+
+        dat=rows;
+        ctx.body = dat;
+        return ctx;
+    });
+    return co;
+};
+
+_rotr.apis.sousuo = function(){//搜索视频
+    var ctx = this;
+    var co = $co(function * () {
+        var className= ctx.query.name || ctx.request.body.name;
+        var dat={};
+        var sqletr="select * from video where VideoclassId in (select VideoclassId from videoclass where VideoclassName like '"+"%"+className+"%"+"')" ;
+        var rows = yield _ctnu([_mysql.conn,'query'],sqletr);
+        if(!rows)throw Error("失败");
+        dat=rows;
+        console.log(dat);
+        ctx.body = dat;
+        return ctx;
+    });
+    return co;
+};
+
 //视频简介接口
 _rotr.apis.videoMessage = function(){
-  var ctx =this;
-    var ImgPath = ctx.query.sqlImg || ctx.request.body.sqlImg;
-    var co = $co(function*(){
-        var sqlstr="select VideoId from mydb.video where ImgPath = '"+ImgPath+"'";
-        var rows=yield _ctnu([_mysql.conn,'query'],sqlstr);
-        if(!rows)throw Error("失败");
-       //通过上边获取视频对应ID 定义ID为aaa
-       // 通过ID对数据库进行二次多表查询指定属性
-        var aaa=rows[0]['VideoId'];
-        var sqlstr1="select VideoName,VideoSyno,Content from video v left join assess a on a.VideoId=v.VideoId where v.VideoId='"+aaa+"'";
-        var rows1=yield _ctnu([_mysql.conn,'query'],sqlstr1);
-        if(!rows1)throw Error("失败");
-
-        console.log("rows1",rows1);
-        //console.log('>>>>>ImgPath',ImgPath);
-        ctx.body = rows1;
-        return ctx;
-    });
-    return co;
-};
-//视频简介接口的代码，，
-
-//该接口与上边接口一样，，只是传的参数不一样，，来控制video播放
-_rotr.apis.videoPlay = function(){
     var ctx =this;
-    var ImgPath = ctx.query.sqlImg || ctx.request.body.sqlImg;
+    var videoId = ctx.query.videoId || ctx.request.body.videoId;
     var co = $co(function*(){
-        var sqlstr="select VideoId from mydb.video where ImgPath = '"+ImgPath+"'";
-        var rows=yield _ctnu([_mysql.conn,'query'],sqlstr);
-        if(!rows)throw Error("失败");
-        //通过上边获取视频对应ID 定义ID为aaa
-        // 通过ID对数据库进行二次多表查询指定属性
-        var aaa=rows[0]['VideoId'];
-        var sqlstr1="select VideoPath from video v left join assess a on a.VideoId=v.VideoId where v.VideoId='"+aaa+"'";
+        //// 通过ID对数据库进行二次多表查询指定属性
+        console.log(videoId+'视频ID');
+        //数据库查询语句有更改
+        var sqlstr1="select VideoName,VideoSyno from video where VideoId='"+videoId+"'";
+        //var sqlstr1="select VideoSyno,Content from video v,assess a where a.VideoId=v.VideoId and a.VideoId='"+aaa+"'";
         var rows1=yield _ctnu([_mysql.conn,'query'],sqlstr1);
         if(!rows1)throw Error("失败");
 
@@ -584,8 +940,160 @@ _rotr.apis.videoPlay = function(){
     });
     return co;
 };
+//视频评价接口的代码，，
+_rotr.apis.videosyno = function(){
+    var ctx =this;
+    var videoId = ctx.query.videoId || ctx.request.body.videoId;
+    var co = $co(function*(){
+        var sqlstr="select UserName,ImgPath,Content from assess a left join user u on a.UserId=u.UserId where VideoId='"+videoId+"'";
+        //var sqlstr1="select VideoSyno,Content from video v,assess a where a.VideoId=v.VideoId and a.VideoId='"+aaa+"'";
+        var rows1=yield _ctnu([_mysql.conn,'query'],sqlstr);
+        if(!rows1)throw Error("失败");
 
-//账号详情接口，，
+        console.log("rows1",rows1);
+        //console.log('>>>>>ImgPath',ImgPath);
+        ctx.body = rows1;
+        return ctx;
+    });
+    return co;
+};
+
+
+
+_rotr.apis.videoPlayJudge = function(){
+    var ctx =this;
+    var videoId = ctx.query.videoId || ctx.request.body.videoId;
+    var UserId = ctx.query.id || ctx.request.body.id;
+    var co = $co(function*() {
+        var dat = {};
+        var sqlstr = "select distinct VideoPrice from video v left join assess a on a.VideoId=v.VideoId where v.VideoId='" + videoId + "'";
+        var rows = yield _ctnu([_mysql.conn, 'query'], sqlstr);
+        if (rows[0]['VideoPrice'] != 0) {
+            //var sqlstr1 = "select VideoId from mydb.orderinfo where (select OrderType from `order` where UserId = '" + UserId + "') = '是'";
+            var sqlstr1 = "select OrderType from mydb.`order` where OrderId in (select OrderId from orderinfo where VideoId = '"+videoId+"' and UserId = '"+UserId+"')";
+            var rows1 = yield _ctnu([_mysql.conn, 'query'], sqlstr1);
+            console.log('2334', rows1);
+            if (rows1['OrderType'] == '是' || rows1 != ''){
+                var sqlstr2 = "select VideoPath from video v left join assess a on a.VideoId=v.VideoId where v.VideoId='" + videoId + "'";
+                var rows0 = yield _ctnu([_mysql.conn, 'query'], sqlstr2);
+                console.log('2336', rows0);
+                dat = {data:rows0,status:'true'};
+            }else {
+                var sqlstr3 = "select VideoPath from video v left join assess a on a.VideoId=v.VideoId where v.VideoId='" + videoId + "'";
+                var rows3 = yield _ctnu([_mysql.conn, 'query'], sqlstr3);
+                dat = {data:rows3,status:'false'};
+            }
+        }
+        else {
+            var sqlstr4 = "select distinct VideoPath from video v left join assess a on a.VideoId=v.VideoId where v.VideoId='" + videoId + "'";
+            var rows = yield _ctnu([_mysql.conn, 'query'], sqlstr4);
+            console.log('2337', rows);
+            dat = {data: rows, status: 'true'};
+        }
+        ctx.body = dat;
+        return ctx;
+    });
+    return co;
+};
+
+
+//视频浏览量
+_rotr.apis.videoVisit = function(){
+    var ctx =this;
+    var videoId = ctx.query.videoId || ctx.request.body.videoId;
+    var co = $co(function*(){
+        var sqlstr=" update video set OverPeople=OverPeople+1 where VideoId='"+videoId+"'";
+        var rows=yield _ctnu([_mysql.conn,'query'],sqlstr);
+        if(!rows)throw Error("失败");
+        console.log("rows",rows);
+        ctx.body = rows;
+        return ctx;
+    })
+    return co
+};
+
+//加入收藏
+_rotr.apis.addmystudy = function(){
+    var ctx =this;
+    var videoId = ctx.query.videoId || ctx.request.body.videoId;
+    var UserId = ctx.query.id || ctx.request.body.id;
+    var KeepTime = ctx.query.time || ctx.request.body.time;
+    var co = $co(function*(){
+        var sqlstr1=" INSERT INTO keep (KeepTime,VideoId,UserId) VALUES ('"+KeepTime+"','"+videoId+"','"+UserId+"')";
+        var rows=yield _ctnu([_mysql.conn,'query'],sqlstr1);
+
+        if(!rows)throw Error("失败");
+        console.log("rows1",rows);
+        //console.log('>>>>>ImgPath',ImgPath);
+        ctx.body = rows;
+        return ctx;
+    });
+    return co;
+};
+
+
+
+//撰写评论
+_rotr.apis.comment = function(){
+    var ctx =this;
+    var Content = ctx.query.Content || ctx.request.body.Content;
+    var AssessTime = ctx.query.AssessTime || ctx.request.body.AssessTime;
+    var VideoId = ctx.query.videoId || ctx.request.body.videoId;
+    var UserId = ctx.query.id || ctx.request.body.id;
+    console.log(Content,AssessTime,VideoId,UserId);
+    var co = $co(function*(){
+        var sqlstr1="INSERT INTO assess (Content,AssessTime,VideoId,UserId) VALUES ('"+Content+"','"+AssessTime+"','"+VideoId+"','"+UserId+"');";
+        var rows=yield _ctnu([_mysql.conn,'query'],sqlstr1);
+
+        if(!rows)throw Error("失败");
+        console.log("rows",rows);
+        ctx.body = rows;
+        return ctx;
+    });
+    return co;
+};
+//账号页的头像,昵称接口,
+_rotr.apis.UserType = function(){
+    var ctx = this;
+    var userId = ctx.query.id || ctx.request.body.id;
+    //var imgPath = ctx.query.imgPath || ctx.request.body.imgPath;
+    var co = $co(function*(){
+        console.log('头像处：',userId);
+        //var dat = {};
+        var sqlstr="select ImgPath,UserNick,UserType,UserName from mydb.user where UserId='"+userId+"'";
+        var rows = yield _ctnu([_mysql.conn,'query'],sqlstr);
+        if(!rows)throw Error("失败");
+        console.log("头像",rows);
+        //console.log('>>>>>ImgPath',ImgPath);
+        ctx.body = rows;
+        return ctx;
+    });
+    return co;
+};
+
+//上传头像
+
+_rotr.apis.uploadPhoto = function(){
+    var ctx = this;
+    var userId = ctx.query.id || ctx.request.body.id;
+    var imgPath = ctx.query.imgPath || ctx.request.body.imgPath;
+    var co = $co(function*(){
+        console.log('头像处：',userId);
+        var sqlstr="update user set ImgPath='"+imgPath+"'where UserId='"+userId+"'";
+        console.log("sqlstr",sqlstr);
+        var rows = yield _ctnu([_mysql.conn,'query'],sqlstr);
+        if(!rows)throw Error("失败");
+        console.log("头像",rows);
+        //console.log('>>>>>ImgPath',ImgPath);
+        ctx.body = rows;
+        return ctx;
+    });
+    return co;
+};
+
+
+
+//账号详情接口，，借用，
 _rotr.apis.personCenter = function(){
     var ctx = this;
     var co = $co(function * () {
@@ -601,7 +1109,7 @@ _rotr.apis.personCenter = function(){
         if (rows.length==0){
             var sqlstr2="insert into user(UserId,UserName,UserNick,UserType) values('"+userId+"','"+userName+"','"+userNick+"','user')";
             var rows = yield _ctnu([_mysql.conn, 'query'], sqlstr2);
-        }else{
+        }else {
             if(rows['UserNick']!=userNick){
                 var sqlstr3="update user set UserNick='"+userNick+"'where UserId='"+userId+"'";
                 var rows = yield _ctnu([_mysql.conn,'query'],sqlstr3);

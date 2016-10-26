@@ -13,23 +13,29 @@
 </head>
 <body>
 <div style="height: 200px;background: #49c865;text-align: center">
-    <a href="#"><img src="images/1.jpg" alt="..." class="img-circle" style="width: 100px;height: 100px;top:50px;position: relative;"></a>
-    <a href="personalData.html" style="border: 1px solid;vertical-align: middle;font-size: 30px;color: white;top:50px;left:10px;position: relative;">登陆昵称</a>
+        <div style="width:100%;margin:12px;background:gray;display: none">
+            <div id='wancheng3' style="background:green;width:0;display: none">0%</div></div>
+            <img id="img" src="" alt="..." class="img-circle" style="width: 100px;height: 100px;top:50px;position: relative;">
+        <a id='wenjian3' href='' style="display: none"></a>
+        <div><span id="user_nick" style="font-size: 25px;font-family: 华文行楷; vertical-align: middle;width: 100px;height: 100px;top:50px;position: relative;"></span></div>
 </div>
     <div  style="margin-left: 20px; ">
     <ul class="nav navbar-nav">
         <li >
-            <!--下方购物车超链接与我的订单，设置样式为死样式，购物车不能使用，，需更改-->
-            <a href="">我的购物车</a>
+            <a href="ShoppingCartOrder.html">我的购物车</a>
         </li>
-        <li><a href="我的订单.html">我的订单</a></li>
+        <li><a href="myOrder.html">我的订单</a></li>
         <li><a href="upload.html">上传视频</a></li>
+        <li><a href="uploadPage.html">我的上传</a></li>
         <li><a href="后台.html">后台管理</a></li>
         <li><a href="#">设置</a></li>
     </ul>
     </div>
 
 <script src="http://cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
+<script src="http://m.xmgc360.com/pie/web/js/common.js"></script>
+<script src="js/push.js"></script>
 <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="js/acount.js"></script>
 </body>
 </html>

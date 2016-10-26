@@ -35,20 +35,22 @@ a{text-decoration: none;}
 #navfoot table tr td{width: 25%}
 #navfoot a{color: white}
 #main{ margin-top: 0}
-#sec{width: 100%;height: 200px;border: solid 1px}
-#sec tr td{width: 25%;border: solid 1px;text-align: center}
-#sec td div{width: 50px;height: 50px;position: relative;margin: 0 auto;
-    border-radius:25px;border: 1px solid;text-align: center;line-height: 50px;
+#sec{width: 100%;height: 200px;}
+#sec tr td{width: 25%;text-align: center}
+#sec td div{width: 56px;height: 56px;position: relative;margin: 0 auto;
+    border-radius:28px;text-align: center;line-height: 56px;
     color: white;font-weight: bolder}
 #sec td div:hover{text-decoration: none;}
 .carousel-inner img{width: 100%}
-#sec td p{position: relative;top:10px;}
+#sec td span{font-size: 14px;line-height: 30px;}
 .d{width: 100%;height: 50px;background: gainsboro;line-height: 50px;font-weight: bold;}
 .d span{float: right;}
 .div1 span{float: right;font-weight: bold;}
 .div2 span{float: right;font-weight: bold;}
-.div1{background:#49c865;height: 50px;position: relative;color: white;line-height: 50px;}
-.div2{background:rebeccapurple;height: 50px;position: relative;color: white;line-height: 50px;}
-dl{width: 50%;float: left;text-align: center;margin-top: 0;padding: 10px;line-height: 20px;}
-dl img{width: 98%;margin: 0 auto}
+.div1{background:#49c865;height: 50px;color: white;line-height: 50px;}
+.div2{background:rebeccapurple;height: 50px;color: white;line-height: 50px;}
+dl{width: 100%;text-align: center;float: left;margin: 0;}
+dt{margin: 0}
+dt img{width: 100%;height: 100px}
+dd{height: 40px;line-height: 40px}
 #footer a{color: white}

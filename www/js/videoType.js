@@ -1,19 +1,19 @@
 /**
  * Created by liu on 2016/9/18.
  */
-    $.post('../api/videoType',function(dat){
-        //$("#Id").html(dat[0]['ClassId']);
-        //$("#name").html(dat[0]['ClassName']);
-        for(var i=0;i<dat.length;i++){
-            var usr=dat[i];
-            var usrjo=$('#courtype').clone(true,true);
-            usrjo.find('#Id').html(usr['VideoclassId']);
-            usrjo.find('#name').html(usr['VideoclassName']);
-            usrjo.find('#Courname').html(usr['ClassName']);
-            usrjo.find('#btn').html("<div class='btn btn-default' onclick=\"del('"+usr['VideoclassId']+"')\">"+'删除'+"</div>");
-            $('#trbox').append(usrjo);
-        }
-    });
+$.post('../api/videoType',function(dat){
+    //$("#Id").html(dat[0]['ClassId']);
+    //$("#name").html(dat[0]['ClassName']);
+    for(var i=0;i<dat.length;i++){
+        var usr=dat[i];
+        var usrjo=$('#courtype').clone(true,true);
+        usrjo.find('#Id').html(usr['VideoclassId']);
+        usrjo.find('#name').html(usr['VideoclassName']);
+        usrjo.find('#Courname').html(usr['ClassName']);
+        usrjo.find('#btn').html("<div class='btn btn-default' onclick=\"del('"+usr['VideoclassId']+"')\">"+'删除'+"</div>");
+        $('#trbox').append(usrjo);
+    }
+});
 $("#add").click(function(){
     $("#table").append('<tr>'+
         '<td>'+
@@ -47,34 +47,44 @@ function aaa(){
         var dat={id:row1,name:row2,type:row3};
         $.post('../api/typeAdd',dat,function(res){
             if(res==1){
-               alert('成功增加！')
+                alert('成功增加！')
             }
             else {
-               alert('失败');
+                alert('失败');
             }
             location.reload();
-    })
+        })
     }
 }
-/*
-$("#del").click(function(){
-    alert('q12213231');
-   var t1=$('#t1').val;
-    var t2=$('#t2').val;
-    var t3=$('#t3').val;
-    if(t1==''||t2==''||t3==''){
-        alert("不能为空！");
+function del(usr){
+    var tname;
+    if(!e){
+        var e = window.event;
     }
-    else {
-        alert(t1);
-    }
-});*/
-//function aaa() {
-//    var t1 = $('#table')[0].firstChild.val;
-//    alert("LL" + t1);
-//    var t2 = $('#t2').val;
-//    var t3 = $('#t3').val;
-//    if (t1 == '' || t2 == '' || t3 == '') {
-//        alert("不能为空！");
-//    }
-//}
+    //获取事件点击元素
+    var targ = e.target;
+    //获取元素名称
+    var cente=targ.parentNode.parentNode.parentNode;
+    var dat={name:usr};
+    $.post('../api/selectvideoType',dat,function(re){
+        if(re!=0){
+            alert('该视频类型拥有视频，不能删除！');
+        }
+        else{
+            if (!confirm("确认要删除？")) {
+                var kay=window.event.returnValue = false;
+            }
+            if(kay!=false){
+                $.post('../api/deletvideoType',dat,function(rs){
+                    if(rs==1){
+                        alert('删除成功！');
+                        cente.remove();
+                    }else{
+                        alert('删除失败！');
+                    }
+
+                })
+            }
+        }
+    })
+}

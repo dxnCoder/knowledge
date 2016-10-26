@@ -2,8 +2,8 @@
  * Created by liu on 2016/9/19.
  */
 $(document).ready(function(){
-        var videopath=$('#wenjian').val();
-        var imgpath=$('#wenjian2').val();
+        var videopath=$('#wenjian2').val();
+        var imgpath=$('#wenjian').val();
         if(videopath==null){
             $('.path').hide();
         }else{$('.path').show();}
@@ -38,8 +38,8 @@ function Submit(){
     console.log(localStorage.vvv);
     var videoname=$('#type').val();
     var name=$('#name').val();
-    var videopath=$('#wenjian').html();
-    var imgpath=$('#wenjian2').html();
+    var videopath=$('#wenjian2').html();
+    var imgpath=$('#wenjian').html();
     var price=$('#price').val();
     var syno=$('#syno').val();
     if(videoname==null){
@@ -62,6 +62,7 @@ function Submit(){
                         var videoId=res[0]['VideoclassId'];
                         var time=CurentTime();
                         var userId=localStorage.vvv;
+                        console.log(videoname+videopath+imgpath+price+syno+time);
                         var dir={
                             VideoName:name,
                             VideoSyno:syno,
@@ -72,7 +73,6 @@ function Submit(){
                             ImgPath:imgpath,
                             UserId:userId
                         };
-						console.log(videoname+videopath+imgpath+price+syno+time);
                         $.post('../api/upload',dir,function(mn){
                             if(mn==1){
                                 alert('上传成功！');location.reload();
